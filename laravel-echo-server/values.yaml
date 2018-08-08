@@ -1,0 +1,7 @@
+image: lagun4ik/laravel-echo-server
+
+imagePullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: "ClusterIP"
