@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laravel-echo-server-conf
+  labels:
+    app: laravel-echo-server
+data:
+  laravel-echo-server-conf: |-
+{{- if .Values.config }}
+{{ .Values.config | indent 4 }}
+{{- end -}}
