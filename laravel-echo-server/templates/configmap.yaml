@@ -5,7 +5,7 @@ metadata:
   labels:
     app: laravel-echo-server
 data:
-  laravel-echo-server-conf: |-
+  laravel-echo-server.json: |-
 {{- if .Values.config }}
 {{ .Values.config | indent 4 }}
 {{- end -}}

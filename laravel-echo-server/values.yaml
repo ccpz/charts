@@ -1,7 +1,41 @@
-image: lagun4ik/laravel-echo-server
+image: ytchiang/laravel-echo-server:release-1.3.9
 
 imagePullPolicy: IfNotPresent
 
 service:
   enabled: true
   type: "ClusterIP"
+
+config: | 
+    {
+        "authHost": "http://localhost",
+        "authEndpoint": "/broadcasting/auth",
+        "clients": [
+           {
+                "appId": "01dxxxxxxxx",
+                "key": "58f2xxxxxxxxxxxxxxxxxxxxx"
+           }
+        ],
+        "database": "redis",
+        "databaseConfig": {
+            "redis": {"host": "redis-master", "password": ""},
+            "sqlite": {
+                "databasePath": "/database/laravel-echo-server.sqlite"
+            }
+        },
+        "devMode": true,
+        "host": null,
+        "port": "6001",
+        "protocol": "http",
+        "socketio": {},
+        "sslCertPath": "",
+        "sslKeyPath": "",
+        "sslCertChainPath": "",
+        "sslPassphrase": "",
+        "apiOriginAllow": {
+            "allowCors": true,
+            "allowOrigin": "http://localhost:80",
+            "allowMethods": "GET, POST",
+            "allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+        }
+    }
