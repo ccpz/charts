@@ -18,15 +18,48 @@ spec:
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         name: laravel-echo-server
         ports:
-        - containerPort: 6001
+        - containerPort: {{ .Values.config.redisPort}}
           name: rest-port
-
-        volumeMounts:
-          - name: laravel-echo-server-conf
-            mountPath: /app/laravel-echo-server.json
-            subPath: laravel-echo-server.json
-            readOnly: true
-      volumes:
-        - name: laravel-echo-server-conf
-          configMap:
-            name: laravel-echo-server-conf
+        env:
+        - name: AUTH_HOST
+          value: {{ .Values.config.authHost | quote}}
+        - name: AUTH_ENDPOINT
+          value: {{ .Values.config.authEndpoint | quote}}
+        - name: DATABASE
+          value: {{ .Values.config.database | quote}}
+        - name: REDIS_HOST
+          value: {{ .Values.config.redisHost | quote}}
+        - name: REDIS_PORT
+          value: {{ .Values.config.redisPort | quote}}
+{{ if .Values.config.redisPasswordSecretName }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.config.redisPasswordSecretName | quote}}
+              key: {{ .Values.config.redisPasswordSecretKey | quote}}
+{{ else }}
+        - name: REDIS_PASSWORD
+          value: {{ .Values.config.redisPassword | quote}}
+{{ end }}
+        - name: REDIS_DB
+          value: {{ .Values.config.redisDB | quote}}
+        - name: SQLITE_PATH
+          value: {{ .Values.config.sqlitePath | quote}}
+        - name: CLIENT_KEY
+          value: {{ .Values.config.client_key | quote}}
+        - name: DEV_MODE
+          value: {{ .Values.config.devMode | quote}}
+#        - name: ECHO_SERVER_HOST
+#          value: {{ .Values.config.database }}
+        - name: ECHO_SERVER_PORT
+          value: {{ .Values.config.port | quote}}
+        - name: ECHO_SERVER_PROTOCOL
+          value: {{ .Values.config.protocol | quote}}
+        - name: ALLOW_CORS
+          value: {{ .Values.config.allow_cors | quote}}
+        - name: ALLOW_ORIGIN
+          value: {{ .Values.config.allow_origin | quote}}
+        - name: ALLOW_METHODS
+          value: {{ .Values.config.allow_methods | quote}}
+        - name: ALLOW_HEADERS
+          value: {{ .Values.config.allow_headers | quote}}

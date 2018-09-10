@@ -1,4 +1,4 @@
-image: ytchiang/laravel-echo-server:release-1.3.9
+image: ytchiang/laravel-echo-server-env:release-1.3.9
 
 imagePullPolicy: IfNotPresent
 
@@ -6,36 +6,22 @@ service:
   enabled: true
   type: "ClusterIP"
 
-config: | 
-    {
-        "authHost": "http://localhost",
-        "authEndpoint": "/broadcasting/auth",
-        "clients": [
-           {
-                "appId": "01dxxxxxxxx",
-                "key": "58f2xxxxxxxxxxxxxxxxxxxxx"
-           }
-        ],
-        "database": "redis",
-        "databaseConfig": {
-            "redis": {"host": "redis-master", "password": ""},
-            "sqlite": {
-                "databasePath": "/database/laravel-echo-server.sqlite"
-            }
-        },
-        "devMode": true,
-        "host": null,
-        "port": "6001",
-        "protocol": "http",
-        "socketio": {},
-        "sslCertPath": "",
-        "sslKeyPath": "",
-        "sslCertChainPath": "",
-        "sslPassphrase": "",
-        "apiOriginAllow": {
-            "allowCors": true,
-            "allowOrigin": "http://localhost:80",
-            "allowMethods": "GET, POST",
-            "allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
-        }
-    }
+config:
+  authHost: "http://localhost"
+  authEndpoint: "/broadcasting/auth"
+  database: "redis"
+  redisHost: "redis-master"
+  redisPort: "6379"
+  redisPassword: ""
+  redisPasswordSecretName: "redis"
+  redisPasswordSecretKey: "redis-password"
+  redisDB: "0"
+  sqlitePath: ""
+  devMode: true
+  port: "6001"
+  protocol: "http"
+  allow_cors: true
+  allow_origin: "http://localhost:80"
+  allow_methods: "GET, POST"
+  allow_headers: "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+  client_key: ""
